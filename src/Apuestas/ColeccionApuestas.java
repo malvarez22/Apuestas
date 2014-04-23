@@ -16,22 +16,25 @@ import java.util.List;
  * @version 0.1 14/04/2014
  */
 public class ColeccionApuestas {
-
-	
 	/**
 	 * Constructor por defecto. Setea el n�mero de equipos en 2 (el m�nimo posible). 
 	 */
+	List<String> listaGanadores;
+	List<Apuesta> listaApuestas;
+	int NroEquipos;
+	int NroApuestas;
+	Apuesta apuesta;
+	
 	public ColeccionApuestas() {
-		//TODO implementar esta rutina
+		NroApuestas=listaApuestas.size();		
 	}
-
 	
 	/**
 	 * Constructor que toma como par�metro el n�mero de equipos de las apuestas.
 	 * @param nroEquipos es el n�mero de equipos del campeonato.
 	 */
 	public ColeccionApuestas(int nroEquipos) {
-		//TODO implementar esta rutina
+		NroEquipos=2;
 	}
 
 	/**
@@ -39,8 +42,7 @@ public class ColeccionApuestas {
 	 * @return n�mero de apuestas registradas en el sistema.
 	 */
 	public int numApuestas() {
-		//TODO implementar esta rutina
-		return 0;
+		return NroApuestas;
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class ColeccionApuestas {
 	 * @param apuesta es la apuesta a agregar en el sistema. 
 	 */
 	public void agregar(Apuesta apuesta) {
-		//TODO implementar esta rutina
+		listaApuestas.add(apuesta);
 	}
 
 	/**
@@ -59,7 +61,9 @@ public class ColeccionApuestas {
 	 * @param i es el nuevo n�mero de equipos en el campeonato.
 	 */
 	public void cambiarNroEquipos(int i) {
-		//TODO implementar esta rutina
+		if(listaApuestas.isEmpty()){ //analiza que no se haya realizado ninguna apuesta 
+			apuesta.cambiarNroEquipos(i);										   //ni tampoco haya una apuesta con un usuario ya registrado	
+		}
 	}
 
 	/**

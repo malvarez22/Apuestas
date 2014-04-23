@@ -28,8 +28,9 @@ public class Apuesta {
 	 * @param posiciones es la apuesta.
 	 */
 	public Apuesta(String usuario, int NroEquipos, int[] posiciones) {
-		this.NroEquipos=NroEquipos;
+		this.NroEquipos=posiciones.length;
 		this.usuario=usuario;
+		this.posiciones=posiciones;
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class Apuesta {
 	 * @param es el nuevo nœmero de equipos de la apuesta
 	 */
 	public void cambiarNroEquipos(int i) {
-		//TODO implementar esta rutina
+		NroEquipos=i;
 	}
 	
 	/**
@@ -53,8 +54,7 @@ public class Apuesta {
 	 * @return el orden de los equipos seleccionado por el usuario en su apuesta.
 	 */
 	public int[] posiciones() {
-		//TODO implementar esta rutina
-		return null;
+		return posiciones;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class Apuesta {
 	 * @param posiciones es el nuevo orden establecido por el usuario para los equipos del torneo.
 	 */
 	public void cambiarPosiciones(int[] posiciones) {
-		//TODO implementar esta rutina
+		this.posiciones=posiciones;
 	}
 
 	/**
