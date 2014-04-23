@@ -34,7 +34,7 @@ public class ColeccionApuestas {
 	 * @param nroEquipos es el n�mero de equipos del campeonato.
 	 */
 	public ColeccionApuestas(int nroEquipos) {
-		NroEquipos=2;
+		this.NroEquipos=nroEquipos;
 	}
 
 	/**
@@ -52,7 +52,9 @@ public class ColeccionApuestas {
 	 * @param apuesta es la apuesta a agregar en el sistema. 
 	 */
 	public void agregar(Apuesta apuesta) {
-		listaApuestas.add(apuesta);
+		if(!listaApuestas.contains(apuesta.usuario)){ //Pregunta si el usuario no esta en alguna apuesta registrada
+			listaApuestas.add(apuesta);
+		}
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class ColeccionApuestas {
 	 */
 	public void cambiarNroEquipos(int i) {
 		if(listaApuestas.isEmpty()){ //analiza que no se haya realizado ninguna apuesta 
-			apuesta.cambiarNroEquipos(i);										   //ni tampoco haya una apuesta con un usuario ya registrado	
+			apuesta.cambiarNroEquipos(i);				
 		}
 	}
 
@@ -81,8 +83,7 @@ public class ColeccionApuestas {
 	 * @return la lista de ganadores del sistema.
 	 */
 	public List<String> ganadores() {
-		//TODO implementar esta rutina
-		return null;
+		return listaGanadores;
 	}
 
 	/**
