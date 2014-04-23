@@ -9,13 +9,15 @@ package Apuestas;
  * @version 0.1 14/04/2014
  */
 public class Apuesta {
-		
+		String usuario;
+		int NroEquipos;
+		int [] posiciones;
 	/**
 	 * Constructor que crea una apuesta vac’a, dado el nombre del apostador.
 	 * @param usuario es el nombre del apostador.
 	 */
 	public Apuesta(String usuario) {
-		//TODO implementar esta rutina
+		this.usuario = usuario;
 	}
 
 	/**
@@ -26,7 +28,8 @@ public class Apuesta {
 	 * @param posiciones es la apuesta.
 	 */
 	public Apuesta(String usuario, int NroEquipos, int[] posiciones) {
-		//TODO implementar esta rutina
+		this.NroEquipos=NroEquipos;
+		this.usuario=usuario;
 	}
 
 	/**
@@ -42,8 +45,7 @@ public class Apuesta {
 	 * @return el nœmero de equipos de la apuesta.
 	 */
 	public int nroEquipos() {
-		//TODO implementar esta rutina
-		return 0;
+		return NroEquipos;
 	}
 
 	/**
@@ -68,8 +70,7 @@ public class Apuesta {
 	 * @return el nombre del usuario que emite la apuesta.
 	 */
 	public String usuario() {
-		//TODO implementar esta rutina
-		return null;
+		return usuario;
 	}
 
 
