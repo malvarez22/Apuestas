@@ -28,7 +28,7 @@ public class Apuesta {
 	 * @param posiciones es la apuesta.
 	 */
 	public Apuesta(String usuario, int NroEquipos, int[] posiciones) {
-		this.NroEquipos=posiciones.length;
+		this.NroEquipos = NroEquipos;
 		this.usuario=usuario;
 		this.posiciones=posiciones;
 	}

@@ -1,5 +1,6 @@
 package Apuestas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,13 +21,14 @@ public class ColeccionApuestas {
 	 * Constructor por defecto. Setea el n�mero de equipos en 2 (el m�nimo posible). 
 	 */
 	List<String> listaGanadores;
-	List<Apuesta> listaApuestas;
-	int NroEquipos;
-	int NroApuestas;
+	List<Apuesta> listaApuestas = new ArrayList<Apuesta>();
+	private int numEquipos;
+	private int numApuestas;
 	Apuesta apuesta;
+	private int[] posicionesFinales;
 	
 	public ColeccionApuestas() {
-		NroApuestas=listaApuestas.size();		
+		numApuestas=listaApuestas.size();		
 	}
 	
 	/**
@@ -34,7 +36,8 @@ public class ColeccionApuestas {
 	 * @param nroEquipos es el n�mero de equipos del campeonato.
 	 */
 	public ColeccionApuestas(int nroEquipos) {
-		this.NroEquipos=nroEquipos;
+		this.numEquipos=nroEquipos;
+		numApuestas = 0;
 	}
 
 	/**
@@ -42,7 +45,7 @@ public class ColeccionApuestas {
 	 * @return n�mero de apuestas registradas en el sistema.
 	 */
 	public int numApuestas() {
-		return NroApuestas;
+		return numApuestas;
 	}
 
 	/**
@@ -52,8 +55,16 @@ public class ColeccionApuestas {
 	 * @param apuesta es la apuesta a agregar en el sistema. 
 	 */
 	public void agregar(Apuesta apuesta) {
-		if(!listaApuestas.contains(apuesta.usuario)){ //Pregunta si el usuario no esta en alguna apuesta registrada
+		if (numEquipos != apuesta.NroEquipos) throw new IllegalArgumentException("numero de apuestas invalido");
+		boolean contiene = false;
+		for(int i = 0; i < listaApuestas.size() && !contiene; i++){
+			if (listaApuestas.get(i).usuario() == apuesta.usuario()) contiene = true;  
+		}
+		if(!contiene){ //Pregunta si el usuario no esta en alguna apuesta registrada
 			listaApuestas.add(apuesta);
+			numApuestas++;
+		}else{
+			throw new IllegalArgumentException("El usuario ya ha apostado");
 		}
 	}
 
@@ -63,9 +74,8 @@ public class ColeccionApuestas {
 	 * @param i es el nuevo n�mero de equipos en el campeonato.
 	 */
 	public void cambiarNroEquipos(int i) {
-		if(listaApuestas.isEmpty()){ //analiza que no se haya realizado ninguna apuesta 
-			apuesta.cambiarNroEquipos(i);				
-		}
+		if (!listaApuestas.isEmpty()) throw new IllegalStateException("Ya hay apuestas realizadas");
+		apuesta.cambiarNroEquipos(i);
 	}
 
 	/**
@@ -74,7 +84,9 @@ public class ColeccionApuestas {
 	 * @param posiciones es la tabla de posiciones final del torneo.
 	 */
 	public void establecerPosicionesFinales(int[] posiciones) {
-		//TODO implementar esta rutina
+		if (posiciones == null) throw new IllegalArgumentException("Posiciones es null");
+		if (posiciones.length != numEquipos ) throw new IllegalArgumentException("numero posiciones invalido");
+		posicionesFinales = posiciones;
 	}
 	
 	/**
