@@ -20,15 +20,17 @@ public class ColeccionApuestas {
 	/**
 	 * Constructor por defecto. Setea el n�mero de equipos en 2 (el m�nimo posible). 
 	 */
-	List<String> listaGanadores;
-	List<Apuesta> listaApuestas = new ArrayList<Apuesta>();
+	private List<String> listaGanadores;
+	private List<Apuesta> listaApuestas = new ArrayList<Apuesta>();
 	private int numEquipos;
 	private int numApuestas;
-	Apuesta apuesta;
+	private Apuesta apuesta;
 	private int[] posicionesFinales;
+	private int error;
+	
 	
 	public ColeccionApuestas() {
-		numApuestas=listaApuestas.size();		
+		numApuestas=listaApuestas.size();
 	}
 	
 	/**
@@ -45,7 +47,7 @@ public class ColeccionApuestas {
 	 * @return n�mero de apuestas registradas en el sistema.
 	 */
 	public int numApuestas() {
-		return numApuestas;
+		return listaApuestas.size();
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class ColeccionApuestas {
 	public void establecerPosicionesFinales(int[] posiciones) {
 		if (posiciones == null) throw new IllegalArgumentException("Posiciones es null");
 		if (posiciones.length != numEquipos ) throw new IllegalArgumentException("numero posiciones invalido");
-		posicionesFinales = posiciones;
+		posicionesFinales = posiciones; //armar una matriz booleana
 	}
 	
 	/**
@@ -97,7 +99,8 @@ public class ColeccionApuestas {
 	public List<String> ganadores() {
 		return listaGanadores;
 	}
-
+	
+	
 	/**
 	 * Calcula los apostadores ganadores del sistema. Para poder computar apuestas, se debe contar
 	 * con la tabla de posiciones final ya establecida en el sistema. No es necesario que haya apuestas
@@ -105,7 +108,89 @@ public class ColeccionApuestas {
 	 * ganadores() (lista de ganadores, vac�a si no hubo apuestas).
 	 */
 	public void calcularGanadores() {
-		//TODO implementar esta rutina
+		boolean [][] matrizEquipos=cargarMatriz(posicionesFinales);
+		int [] errores = new int [numApuestas];		
+		for(int i=0;i<numApuestas;i++){
+			int [] pos = listaApuestas.get(i).posiciones();
+			error = 0;
+			split(pos,0,pos.length,matrizEquipos);
+			errores[i]= error;
+		}
+		// Busca el error minimo
+		int currentError=Integer.MAX_VALUE;
+		for(int i=0;i<errores.length;i++){
+			if(errores[i]<currentError){
+				currentError = errores[i];				
+			}
+		}
+		// Busca las apuestas con el error minimo
+		for(int j=0;j<errores.length;j++){
+			
+		}
+	}
+	
+	/**
+	 * @param posicionesFinales 
+	 * Metodo que retorna una matriz booleana indicando que equipos ganan contra otros. 
+	 * 
+	 */
+	public static boolean[][] cargarMatriz(int [] posFinal){
+		boolean [][] matriz = null;
+		for(int i =0;i<posFinal.length;i++){
+			for(int j=0;j<posFinal.length;j++){
+				if(i==j){
+					matriz[i][j]=false;
+				}
+				if(i<j){
+					matriz[i][j] = true;
+					matriz[j][i] = false;
+				}	
+			}	
+		}
+	return matriz;	
+	}
+	
+	/**
+	 * Realiza la particion del arreglo posicionesFinales y tambien la particion de cada arreglo de apuestas
+	 * para luego llamar al metodo compararEquiposGanadores()
+	 */
+	public void split(int [] pos, int inicio, int fin, boolean [][] matrizEquipos){
+		int medio = (inicio + fin)/2;
+		if(inicio<fin){
+			split(pos,inicio,medio,matrizEquipos);
+			split(pos,medio,fin,matrizEquipos);
+			calcularError(pos,inicio,medio,fin,matrizEquipos);
+		}
 	}
 
+	private void calcularError(int[] pos, int inicio, int medio, int fin, boolean[][] matrizEquipos) {
+		int i = inicio;
+		int j = medio+1;
+		int index = inicio;
+		int [] tempArray= new int[pos.length];
+		while(i<=medio && j<=fin){
+			if(!matrizEquipos[pos[i]][pos[j]]){   // VER INDICES i Y j .. si no van al reves
+				error=error+((medio-inicio)+1);
+				tempArray[index] = pos[j];  //debo ordenar equipos y contar 1 error
+				j++;
+			}else{
+				tempArray[index] = pos[i];
+				i++;
+			}
+			index++;
+		} // end while
+		while(i<=medio){
+			tempArray[index]=pos[i];
+			i++;
+			index++;
+		}
+		while(j<=fin){
+			tempArray[index]=pos[j];
+			j++;
+			index++;
+		}
+		for(index=inicio;index<=fin;index++){
+			pos[index]=tempArray[index];
+		}		
+	}
 }
