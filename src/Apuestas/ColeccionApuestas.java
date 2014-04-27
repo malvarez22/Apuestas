@@ -135,16 +135,16 @@ public class ColeccionApuestas {
 	 * 
 	 */
 	public static boolean[][] cargarMatriz(int [] posFinal){
-		boolean [][] matriz = null;
+		int cantEquipos = posFinal.length;
+		boolean[][] matriz = new boolean[cantEquipos][cantEquipos];
 		for(int i =0;i<posFinal.length;i++){
-			for(int j=0;j<posFinal.length;j++){
+			for(int j=i;j<posFinal.length;j++){
 				if(i==j){
 					matriz[i][j]=false;
+				}else{
+					matriz[posFinal[i]-1][posFinal[j]-1] = true;
+					matriz[posFinal[j]-1][posFinal[i]-1] = false;
 				}
-				if(i<j){
-					matriz[i][j] = true;
-					matriz[j][i] = false;
-				}	
 			}	
 		}
 	return matriz;	

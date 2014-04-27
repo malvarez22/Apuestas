@@ -284,5 +284,17 @@ public class TestsApuestasFutbol {
 		apuestas.calcularGanadores();
 		assertTrue("no hay ganadores", apuestas.ganadores().isEmpty());
 	}
-	
+
+	@Test
+	public void testCargarMatriz(){
+		ColeccionApuestas apuestas = new ColeccionApuestas(4);
+		int[] posicionesFinales = {1,2,3,4};
+		boolean[][] result = apuestas.cargarMatriz(posicionesFinales);
+		boolean[][] expResult = {{false,true,true,true},
+								{false,false,true,true},
+								{false,false,false,true},
+								{false,false,false,false}
+								};
+		assertArrayEquals(result,expResult);
+	}
 }
