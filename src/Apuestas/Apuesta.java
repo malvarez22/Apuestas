@@ -17,6 +17,7 @@ public class Apuesta {
 	 * @param usuario es el nombre del apostador.
 	 */
 	public Apuesta(String usuario) {
+		if (usuario == null) throw new IllegalArgumentException("Usuario es null");
 		this.usuario = usuario;
 	}
 
@@ -28,6 +29,9 @@ public class Apuesta {
 	 * @param posiciones es la apuesta.
 	 */
 	public Apuesta(String usuario, int NroEquipos, int[] posiciones) {
+		if (posiciones == null) throw new IllegalArgumentException("posiciones is null!");
+		if (usuario == null) throw new IllegalArgumentException("usuario is null!");
+		if (NroEquipos != posiciones.length) throw new IllegalArgumentException("NroEquipos no coincide con los equipos en posiciones");
 		this.NroEquipos = NroEquipos;
 		this.usuario=usuario;
 		this.posiciones=posiciones;

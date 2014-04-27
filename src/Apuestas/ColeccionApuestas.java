@@ -20,7 +20,7 @@ public class ColeccionApuestas {
 	/**
 	 * Constructor por defecto. Setea el n�mero de equipos en 2 (el m�nimo posible). 
 	 */
-	private List<String> listaGanadores;
+	private List<String> listaGanadores = new ArrayList<String>();;
 	private List<Apuesta> listaApuestas = new ArrayList<Apuesta>();
 	private int numEquipos;
 	private int numApuestas;
@@ -97,6 +97,7 @@ public class ColeccionApuestas {
 	 * @return la lista de ganadores del sistema.
 	 */
 	public List<String> ganadores() {
+		if (listaGanadores.isEmpty()) throw new IllegalStateException("Ganadores no han sido computados");
 		return listaGanadores;
 	}
 	
@@ -109,23 +110,25 @@ public class ColeccionApuestas {
 	 */
 	public void calcularGanadores() {
 		boolean [][] matrizEquipos=cargarMatriz(posicionesFinales);
-		int [] errores = new int [numApuestas];		
+		int [] errores = new int [numApuestas];
 		for(int i=0;i<numApuestas;i++){
 			int [] pos = listaApuestas.get(i).posiciones();
 			error = 0;
-			split(pos,0,pos.length,matrizEquipos);
+			split(pos,0,pos.length-1,matrizEquipos);
 			errores[i]= error;
 		}
 		// Busca el error minimo
-		int currentError=Integer.MAX_VALUE;
+		int minError=Integer.MAX_VALUE;
 		for(int i=0;i<errores.length;i++){
-			if(errores[i]<currentError){
-				currentError = errores[i];				
+			if(errores[i] < minError){
+				minError = errores[i];				
 			}
 		}
 		// Busca las apuestas con el error minimo
 		for(int j=0;j<errores.length;j++){
-			
+			if (errores[j] == minError){
+				listaGanadores.add(listaApuestas.get(j).usuario());
+			}
 		}
 	}
 	
@@ -145,9 +148,9 @@ public class ColeccionApuestas {
 					matriz[posFinal[i]-1][posFinal[j]-1] = true;
 					matriz[posFinal[j]-1][posFinal[i]-1] = false;
 				}
-			}	
+			}
 		}
-	return matriz;	
+		return matriz;
 	}
 	
 	/**
@@ -155,10 +158,10 @@ public class ColeccionApuestas {
 	 * para luego llamar al metodo compararEquiposGanadores()
 	 */
 	public void split(int [] pos, int inicio, int fin, boolean [][] matrizEquipos){
-		int medio = (inicio + fin)/2;
 		if(inicio<fin){
+			int medio = (inicio + fin)/2;
 			split(pos,inicio,medio,matrizEquipos);
-			split(pos,medio,fin,matrizEquipos);
+			split(pos,medio+1,fin,matrizEquipos);
 			calcularError(pos,inicio,medio,fin,matrizEquipos);
 		}
 	}
@@ -169,9 +172,9 @@ public class ColeccionApuestas {
 		int index = inicio;
 		int [] tempArray= new int[pos.length];
 		while(i<=medio && j<=fin){
-			if(!matrizEquipos[pos[i]][pos[j]]){   // VER INDICES i Y j .. si no van al reves
+			if(!matrizEquipos[pos[i]-1][pos[j]-1]){
 				error=error+((medio-inicio)+1);
-				tempArray[index] = pos[j];  //debo ordenar equipos y contar 1 error
+				tempArray[index] = pos[j];
 				j++;
 			}else{
 				tempArray[index] = pos[i];
