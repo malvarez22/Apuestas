@@ -57,7 +57,7 @@ public class ColeccionApuestas {
 	 * @param apuesta es la apuesta a agregar en el sistema. 
 	 */
 	public void agregar(Apuesta apuesta) {
-		if (numEquipos != apuesta.NroEquipos) throw new IllegalArgumentException("numero de apuestas invalido");
+		if (numEquipos != apuesta.nroEquipos()) throw new IllegalArgumentException("numero de apuestas invalido");
 		boolean contiene = false;
 		for(int i = 0; i < listaApuestas.size() && !contiene; i++){
 			if (listaApuestas.get(i).usuario() == apuesta.usuario()) contiene = true;  

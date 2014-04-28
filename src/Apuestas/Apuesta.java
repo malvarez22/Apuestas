@@ -9,9 +9,11 @@ package Apuestas;
  * @version 0.1 14/04/2014
  */
 public class Apuesta {
-		String usuario;
-		int NroEquipos;
-		int [] posiciones;
+		
+	private String usuario;
+	private int NroEquipos;
+	private int[] posiciones;
+	
 	/**
 	 * Constructor que crea una apuesta vac’a, dado el nombre del apostador.
 	 * @param usuario es el nombre del apostador.
