@@ -20,7 +20,7 @@ public class ColeccionApuestas {
 	/**
 	 * Constructor por defecto. Setea el n�mero de equipos en 2 (el m�nimo posible). 
 	 */
-	private List<String> listaGanadores = new ArrayList<String>();;
+	private List<String> listaGanadores = null;;
 	private List<Apuesta> listaApuestas = new ArrayList<Apuesta>();
 	private int numEquipos;
 	private int numApuestas;
@@ -75,9 +75,9 @@ public class ColeccionApuestas {
 	 * apuestas registradas.
 	 * @param i es el nuevo n�mero de equipos en el campeonato.
 	 */
-	public void cambiarNroEquipos(int i) {
+	public void cambiarNroEquipos(int newNumber) {
 		if (!listaApuestas.isEmpty()) throw new IllegalStateException("Ya hay apuestas realizadas");
-		apuesta.cambiarNroEquipos(i);
+		numEquipos = newNumber;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class ColeccionApuestas {
 	 * @return la lista de ganadores del sistema.
 	 */
 	public List<String> ganadores() {
-		if (listaGanadores.isEmpty()) throw new IllegalStateException("Ganadores no han sido computados");
+		if (listaGanadores == null) throw new IllegalStateException("Ganadores no han sido computados");
 		return listaGanadores;
 	}
 	
@@ -109,6 +109,7 @@ public class ColeccionApuestas {
 	 * ganadores() (lista de ganadores, vac�a si no hubo apuestas).
 	 */
 	public void calcularGanadores() {
+		listaGanadores = new ArrayList<String>();
 		boolean [][] matrizEquipos=cargarMatriz(posicionesFinales);
 		int [] errores = new int [numApuestas];
 		for(int i=0;i<numApuestas;i++){
