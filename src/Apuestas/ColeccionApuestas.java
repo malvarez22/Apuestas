@@ -13,8 +13,8 @@ import java.util.List;
  * respecto de la tabla de posiciones final (la "distancia" de una apuesta respecto de la tabla de 
  * posiciones final se mide en t�rminos de cantidad de "inversiones" de la apuesta con respecto a la tabla
  * de posiciones obtenida).
- * @author
- * @version 0.1 14/04/2014
+ * @author Pablo Marconi, Matias Alvarez y Gaston Palandri
+ * @version 1.2 28/04/2014
  */
 public class ColeccionApuestas {
 	
@@ -135,7 +135,8 @@ public class ColeccionApuestas {
 	
 	/**
 	 * Metodo que retorna una matriz booleana indicando que equipos ganan contra otros.
-	 * @param posFinal es la lista de posiciones finales.
+	 * @param arreglo posFinal (lista de posiciones finales).
+	 * @return matriz booleana que indica que equipo le gana a otro.
 	 */
 	public static boolean[][] cargarMatriz(int [] posFinal){
 		int cantEquipos = posFinal.length;
@@ -156,6 +157,10 @@ public class ColeccionApuestas {
 	/**
 	 * Realiza la particion del arreglo posicionesFinales y tambien la particion de cada arreglo de apuestas
 	 * para luego llamar al metodo compararEquiposGanadores()
+	 * @param pos es la lista de posiciones en una apuesta.
+	 * @param inicio indice utilizado para indicar el principio de la lista pos.
+	 * @param fin indice utilizado para indicar el fin de la lista pos
+	 * @param matrizEquipos matriz booleana que indica que equipo le gana a otro. 
 	 */
 	public void split(int [] pos, int inicio, int fin, boolean [][] matrizEquipos){
 		if(inicio<fin){
@@ -166,14 +171,23 @@ public class ColeccionApuestas {
 		}
 	}
 
+	/**
+	 * El metodo calcula el error en una subsecuencia de pos.
+	 * @param pos es la lista de posiciones en una apuesta.
+	 * @param inicio indice utilizado para indicar el principio de la lista pos.
+	 * @param medio indice que indica la mitad de la subsecuencia pos.
+	 * @param fin indice utilizado para indicar el fin de la lista pos
+	 * @param matrizEquipos matriz booleana que indica que equipo le gana a otro.	  
+	 */
 	private void calcularError(int[] pos, int inicio, int medio, int fin, boolean[][] matrizEquipos) {
 		int i = inicio;
 		int j = medio+1;
 		int index = inicio;
 		int [] tempArray= new int[pos.length];
 		while(i<=medio && j<=fin){
-			if(!matrizEquipos[pos[i]-1][pos[j]-1]){
-				error=error+((medio-inicio)+1);
+			//Consulta si el equipo en pos[i]-1 no le gana a pos[j]-1 (en la matriz booleana)
+			if(!matrizEquipos[pos[i]-1][pos[j]-1]){ 
+				error=error+((medio-inicio)+1); 
 				tempArray[index] = pos[j];
 				j++;
 			}else{
@@ -181,7 +195,7 @@ public class ColeccionApuestas {
 				i++;
 			}
 			index++;
-		} // end while
+		}
 		while(i<=medio){
 			tempArray[index]=pos[i];
 			i++;

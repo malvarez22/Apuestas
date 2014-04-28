@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Esta clase contiene tests para todas las rutinas p�blicas de  las clases que participan
  * de la implementaci�n del sistema de apuestas de f�tbol. 
- * @author
+ * @author 
  * @version 0.1 14/04/2014
  */
 public class TestsApuestasFutbol {

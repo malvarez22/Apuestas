@@ -5,8 +5,8 @@ package Apuestas;
  * realiza la apuesta, y una "elecci—n" (la apuesta en s’). La elecci—n consiste de una lista
  * que define el orden que el apostador supone que tendr‡n los equipos en la tabla de posiciones final.
  * Los equipos son representados por valores numŽricos (e.g., 1..20).
- * @author
- * @version 0.1 14/04/2014
+ * @author Matias Alvarez, Pablo Marconi y Gaston Palandri
+ * @version 1.2 28/04/2014
  */
 public class Apuesta {
 		
