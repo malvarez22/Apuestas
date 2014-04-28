@@ -17,20 +17,20 @@ import java.util.List;
  * @version 0.1 14/04/2014
  */
 public class ColeccionApuestas {
-	/**
-	 * Constructor por defecto. Setea el n�mero de equipos en 2 (el m�nimo posible). 
-	 */
-	private List<String> listaGanadores = null;;
+	
+	private List<String> listaGanadores;
 	private List<Apuesta> listaApuestas = new ArrayList<Apuesta>();
 	private int numEquipos;
 	private int numApuestas;
-	private Apuesta apuesta;
 	private int[] posicionesFinales;
 	private int error;
 	
-	
+	/**
+	 * Constructor por defecto. Setea el número de equipos en 2 (el minimo posible). 
+	 */
 	public ColeccionApuestas() {
 		numApuestas=listaApuestas.size();
+		numEquipos = 2;
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class ColeccionApuestas {
 	/**
 	 * Cambia el n�mero de equipos participantes en el campeonato. S�lo puede cambiarse si a�n no hay
 	 * apuestas registradas.
-	 * @param i es el nuevo n�mero de equipos en el campeonato.
+	 * @param newNumber es el nuevo número de equipos en el campeonato.
 	 */
 	public void cambiarNroEquipos(int newNumber) {
 		if (!listaApuestas.isEmpty()) throw new IllegalStateException("Ya hay apuestas realizadas");
@@ -134,9 +134,8 @@ public class ColeccionApuestas {
 	}
 	
 	/**
-	 * @param posicionesFinales 
-	 * Metodo que retorna una matriz booleana indicando que equipos ganan contra otros. 
-	 * 
+	 * Metodo que retorna una matriz booleana indicando que equipos ganan contra otros.
+	 * @param posFinal es la lista de posiciones finales.
 	 */
 	public static boolean[][] cargarMatriz(int [] posFinal){
 		int cantEquipos = posFinal.length;
